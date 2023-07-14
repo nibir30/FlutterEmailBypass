@@ -10,7 +10,6 @@ class AvailableDomainsController extends GetxController {
   @override
   void onInit() {
     super.onInit();
-    getAvailableDomains();
   }
 
   void getAvailableDomains() async {

@@ -25,15 +25,16 @@ class _SignUpPageState extends State<SignUpPage> {
   TextEditingController passwordController = TextEditingController();
   TextEditingController confirmPasswordController = TextEditingController();
   bool isObscure = true;
+  final availableDomainsController = Get.put(AvailableDomainsController());
 
   @override
   void initState() {
     super.initState();
+    availableDomainsController.getAvailableDomains();
   }
 
   @override
   Widget build(BuildContext context) {
-    final availableDomainsController = Get.put(AvailableDomainsController());
     final createAccountController = Get.put(CreateAccountController());
     final size = MediaQuery.of(context).size;
 
