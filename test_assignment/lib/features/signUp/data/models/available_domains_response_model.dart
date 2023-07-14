@@ -28,17 +28,17 @@ class GetAvailableDomainsModel {
   Map<String, dynamic> toJson() => _$GetAvailableDomainsModelToJson(this);
 
   GetAvailableDomainsEntity toEntity() {
-    List<HydraMemberEntity>? searchEntity = [];
+    List<HydraMemberEntity>? dummyentity = [];
 
     for (var i = 0; i < hydramember!.length; i++) {
-      searchEntity.add(hydramember![i].toEntity());
+      dummyentity.add(hydramember![i].toEntity());
     }
     return GetAvailableDomainsEntity(
-      acontext,
-      aid,
-      atype,
-      searchEntity,
-      hydratotalItems,
+      acontext: acontext,
+      aid: aid,
+      atype: atype,
+      hydramember: dummyentity,
+      hydratotalItems: hydratotalItems,
     );
   }
 }

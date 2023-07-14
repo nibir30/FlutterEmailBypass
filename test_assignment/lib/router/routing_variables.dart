@@ -4,7 +4,6 @@ class Navigation {
   static const String authPage = 'authPage';
   static const String regPage = 'regPage';
   static const String homePage = 'homePage';
-  static const String searchPage = 'searchPage';
 }
 
 class NativeMethods {

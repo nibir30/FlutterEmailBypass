@@ -1,10 +1,13 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
+import 'package:test_assignment/features/dashboard/presentation/getx/messages_controller.dart';
+import 'package:test_assignment/features/logIn/presentation/getx_login/login_controller.dart';
 import 'package:test_assignment/features/signUp/presentation/pages/sign_up_page.dart';
 
 import '../../../../constants/app_constant.dart';
 import '../../../../constants/text_styles.dart';
-import '../../../../router/routing_variables.dart';
 import '../../../../shared/widgets/submit_button_widget.dart';
+import '../../domain/entities/login_request_entity.dart';
 
 class LoginPage extends StatefulWidget {
   const LoginPage({Key? key}) : super(key: key);
@@ -14,9 +17,10 @@ class LoginPage extends StatefulWidget {
 }
 
 class _LoginPageState extends State<LoginPage> {
-  TextEditingController phoneController = TextEditingController();
+  final loginController = Get.put(LoginController());
+
+  TextEditingController mailController = TextEditingController();
   TextEditingController passwordController = TextEditingController();
-  // LoginBloc loginBloc = LoginBloc();
   bool isObscure = true;
 
   @override
@@ -71,10 +75,9 @@ class _LoginPageState extends State<LoginPage> {
                       ),
                       child: TextField(
                         style: ConstantTextStyles.body16(context),
-                        keyboardType: TextInputType.phone,
-                        controller: phoneController,
+                        controller: mailController,
                         decoration: InputDecoration(
-                          hintText: "Enter your phone no",
+                          hintText: "Enter your mail address",
                           border: InputBorder.none,
                           hintStyle: TextStyle(color: AppConstant.textFieldBorderColor),
                         ),
@@ -156,45 +159,27 @@ class _LoginPageState extends State<LoginPage> {
                   ],
                 ),
                 SizedBox(height: 24),
-                // BlocListener(
-                //   bloc: loginBloc,
-                //   listener: (BuildContext context, state) {
-                //     if (state is LoginSuccessState) {
-                //       LoginUserEntity? user = state.authEntity.loginUser;
-                //       if (user != null && user.isPhoneVerified == true) {
-                //         Navigator.pushReplacementNamed(
-                //           context,
-                //           Navigation.homePage,
-                //         );
-                //       } else {
-                //         Navigator.pushNamed(
-                //           context,
-                //           Navigation.otpPage,
-                //           arguments: user!.username,
-                //         );
-                //       }
-                //     }
-                //   },
-                //   child: BlocBuilder(
-                //     bloc: loginBloc,
-                //     builder: (BuildContext context, LoginState state) {
-                //       if (state is LoginLoadingState) {
-                //         //return Center(child: CircularProgressIndicator());
-                //       } else if (state is LoginErrorState) {
-                //         return Text(state.errorMsg, style: TextStyle(color: Colors.red));
-                //       } else {
-                //         return Container();
-                //       }
-                //       return Container();
-                //     },
-                //   ),
-                // ),
-
+                GetX<LoginController>(
+                  builder: (controller) {
+                    if (controller.isLoading.value) {
+                      return Column(
+                        children: [
+                          CircularProgressIndicator(),
+                          SizedBox(height: 16),
+                        ],
+                      );
+                    } else {
+                      return Container();
+                    }
+                  },
+                ),
                 SizedBox(height: AppConstant.paddingSmall),
                 InkWell(
                   onTap: () {
-                    // LoginRequestEntity loginRE = LoginRequestEntity(phoneController.text, passwordController.text);
-                    // loginBloc.add(RequestLoginEvent(loginRE));
+                    LoginRequestEntity loginRE = LoginRequestEntity();
+                    loginRE.address = mailController.text;
+                    loginRE.password = passwordController.text;
+                    loginController.login(loginRE, context);
                   },
                   child: SubmitButtonWidget(title: "Sign in"),
                 ),

@@ -1,10 +1,15 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
+import 'package:test_assignment/core/utils/toast.dart';
+import 'package:test_assignment/features/signUp/domain/entities/hydra_member_entity.dart';
+import 'package:test_assignment/features/signUp/domain/entities/signup_request_entity.dart';
+import 'package:test_assignment/features/signUp/presentation/get_signup/create_account_controller.dart';
 
 import '../../../../constants/app_constant.dart';
 import '../../../../constants/text_styles.dart';
-import '../../../../core/utils/toast.dart';
 import '../../../../router/routing_variables.dart';
 import '../../../../shared/widgets/submit_button_widget.dart';
+import '../get_signup/available_domains_controller.dart';
 
 class SignUpPage extends StatefulWidget {
   const SignUpPage({Key? key}) : super(key: key);
@@ -14,25 +19,25 @@ class SignUpPage extends StatefulWidget {
 }
 
 class _SignUpPageState extends State<SignUpPage> {
-  String domainName = "@example.com";
-  List<String> collegeNames = [];
-  TextEditingController fullNameController = TextEditingController();
+  String domainName = "example.com";
+  String? choosenDomain;
   TextEditingController mailController = TextEditingController();
   TextEditingController passwordController = TextEditingController();
   TextEditingController confirmPasswordController = TextEditingController();
   bool isObscure = true;
-
-  // RegistrationBloc registrationBloc = RegistrationBloc();
-  // AllCollegeBloc collegeBloc = AllCollegeBloc();
+  final availableDomainsController = Get.put(AvailableDomainsController());
 
   @override
   void initState() {
-    // collegeBloc.add(AllCollegeRequestEvent());
     super.initState();
+    availableDomainsController.getAvailableDomains();
   }
 
   @override
   Widget build(BuildContext context) {
+    final createAccountController = Get.put(CreateAccountController());
+    final size = MediaQuery.of(context).size;
+
     return SafeArea(
       child: Scaffold(
         body: SingleChildScrollView(
@@ -61,24 +66,64 @@ class _SignUpPageState extends State<SignUpPage> {
                           style: ConstantTextStyles.subTitle14(context),
                         ),
                         SizedBox(height: 8),
-                        Container(
-                          // height: 60,
-                          padding: EdgeInsets.only(left: 12),
-                          decoration: BoxDecoration(
-                            border: Border.all(
-                              color: Theme.of(context).brightness == Brightness.light ? AppConstant.neutral30 : AppConstant.neutral70,
-                            ),
-                            borderRadius: BorderRadius.circular(12),
-                          ),
-                          child: TextField(
-                            style: ConstantTextStyles.body16(context),
-                            controller: fullNameController,
-                            decoration: InputDecoration(
-                              hintText: "Enter your full name",
-                              border: InputBorder.none,
-                              hintStyle: TextStyle(color: AppConstant.textFieldBorderColor),
-                            ),
-                          ),
+                        GetX<AvailableDomainsController>(
+                          builder: (controller) {
+                            if (controller.isLoading.value) {
+                              return Center(
+                                child: CircularProgressIndicator(),
+                              );
+                            } else {
+                              return Container(
+                                width: size.width,
+                                padding: EdgeInsets.symmetric(horizontal: 16),
+                                height: 50,
+                                decoration: BoxDecoration(
+                                  borderRadius: BorderRadius.circular(12),
+                                  border: Border.all(color: AppConstant.neutral30),
+                                ),
+                                child: DropdownButton<String>(
+                                  dropdownColor: AppConstant.neutral20,
+                                  borderRadius: BorderRadius.circular(16),
+                                  elevation: 0,
+                                  icon: Icon(Icons.keyboard_arrow_down),
+                                  isExpanded: true,
+                                  underline: SizedBox(),
+                                  hint: Text(
+                                    "Select Domain",
+                                    style: TextStyle(
+                                      color: AppConstant.neutral60,
+                                      fontSize: 14,
+                                    ),
+                                  ),
+                                  value: choosenDomain,
+                                  items: controller.availableDomains.value.hydramember != null
+                                      ? controller.availableDomains.value.hydramember!.map<DropdownMenuItem<String>>(
+                                          (HydraMemberEntity value) {
+                                            return DropdownMenuItem<String>(
+                                              value: value.domain,
+                                              child: Text(value.domain.toString()),
+                                            );
+                                          },
+                                        ).toList()
+                                      : ["No Available Domain"].map<DropdownMenuItem<String>>(
+                                          (String value) {
+                                            return DropdownMenuItem<String>(
+                                              value: value,
+                                              child: Text(value.toString()),
+                                            );
+                                          },
+                                        ).toList(),
+                                  onChanged: (newValue) {
+                                    setState(() {
+                                      choosenDomain = newValue;
+                                      domainName = newValue!;
+                                      // genderController.text = newValue.toString();
+                                    });
+                                  },
+                                ),
+                              );
+                            }
+                          },
                         ),
                         SizedBox(height: 24),
                       ],
@@ -105,7 +150,7 @@ class _SignUpPageState extends State<SignUpPage> {
                             controller: mailController,
                             decoration: InputDecoration(
                               suffix: Text(
-                                domainName + " ",
+                                "@" + domainName + " ",
                                 style: ConstantTextStyles.bodySM14(context).copyWith(color: Colors.black),
                               ),
                               hintText: "Enter username",
@@ -126,50 +171,68 @@ class _SignUpPageState extends State<SignUpPage> {
                         ),
                         SizedBox(height: 8),
                         Container(
-                          height: 50,
-                          padding: EdgeInsets.only(left: 12),
+                          height: 48,
                           decoration: BoxDecoration(
                             border: Border.all(
                               color: Theme.of(context).brightness == Brightness.light ? AppConstant.neutral30 : AppConstant.neutral70,
                             ),
-                            borderRadius: BorderRadius.circular(12),
+                            borderRadius: BorderRadius.circular(10),
                           ),
-                          child: Padding(
-                            padding: EdgeInsets.only(top: 18),
-                            child: TextField(
-                              style: ConstantTextStyles.body16(context),
-                              obscureText: isObscure,
-                              controller: passwordController,
-                              decoration: InputDecoration(
-                                hintText: "Password",
-                                border: InputBorder.none,
-                                hintStyle: TextStyle(
-                                  color: AppConstant.textFieldBorderColor,
-                                ),
-                                suffix: TextButton(
-                                  onPressed: () {
-                                    setState(
-                                      () {
-                                        isObscure = !isObscure;
-                                      },
-                                    );
-                                  },
-                                  child: isObscure
-                                      ? Text(
-                                          "Show",
-                                          style: TextStyle(
-                                            color: AppConstant.primary60,
-                                            fontWeight: FontWeight.w600,
+                          padding: EdgeInsets.symmetric(horizontal: 16),
+                          child: TextField(
+                            style: ConstantTextStyles.body16(context),
+                            controller: passwordController,
+                            obscureText: isObscure,
+                            decoration: InputDecoration(
+                              border: InputBorder.none,
+                              hintText: "Password",
+                              hintStyle: TextStyle(color: AppConstant.neutral30),
+                              suffix: Container(
+                                child: isObscure
+                                    ? Column(
+                                        children: [
+                                          SizedBox(height: 27),
+                                          InkWell(
+                                            onTap: () {
+                                              setState(
+                                                () {
+                                                  isObscure = !isObscure;
+                                                },
+                                              );
+                                            },
+                                            child: Text(
+                                              "Show",
+                                              style: TextStyle(
+                                                color: AppConstant.primary60,
+                                                fontWeight: FontWeight.w600,
+                                                fontSize: 14,
+                                              ),
+                                            ),
                                           ),
-                                        )
-                                      : Text(
-                                          "Hide",
-                                          style: TextStyle(
-                                            color: AppConstant.primary60,
-                                            fontWeight: FontWeight.w600,
+                                        ],
+                                      )
+                                    : Column(
+                                        children: [
+                                          SizedBox(height: 27),
+                                          InkWell(
+                                            onTap: () {
+                                              setState(
+                                                () {
+                                                  isObscure = !isObscure;
+                                                },
+                                              );
+                                            },
+                                            child: Text(
+                                              "Hide",
+                                              style: TextStyle(
+                                                color: AppConstant.primary60,
+                                                fontWeight: FontWeight.w600,
+                                                fontSize: 14,
+                                              ),
+                                            ),
                                           ),
-                                        ),
-                                ),
+                                        ],
+                                      ),
                               ),
                             ),
                           ),
@@ -186,50 +249,68 @@ class _SignUpPageState extends State<SignUpPage> {
                         ),
                         SizedBox(height: 8),
                         Container(
-                          height: 50,
-                          padding: EdgeInsets.only(left: 12),
+                          height: 48,
                           decoration: BoxDecoration(
                             border: Border.all(
                               color: Theme.of(context).brightness == Brightness.light ? AppConstant.neutral30 : AppConstant.neutral70,
                             ),
-                            borderRadius: BorderRadius.circular(12),
+                            borderRadius: BorderRadius.circular(10),
                           ),
-                          child: Padding(
-                            padding: EdgeInsets.only(top: 18),
-                            child: TextField(
-                              style: ConstantTextStyles.body16(context),
-                              obscureText: isObscure,
-                              controller: confirmPasswordController,
-                              decoration: InputDecoration(
-                                hintText: "Password",
-                                border: InputBorder.none,
-                                hintStyle: TextStyle(
-                                  color: AppConstant.textFieldBorderColor,
-                                ),
-                                suffix: TextButton(
-                                  onPressed: () {
-                                    setState(
-                                      () {
-                                        isObscure = !isObscure;
-                                      },
-                                    );
-                                  },
-                                  child: isObscure
-                                      ? Text(
-                                          "Show",
-                                          style: TextStyle(
-                                            color: Color.fromRGBO(61, 97, 152, 1),
-                                            fontWeight: FontWeight.w600,
+                          padding: EdgeInsets.symmetric(horizontal: 16),
+                          child: TextField(
+                            style: ConstantTextStyles.body16(context),
+                            controller: confirmPasswordController,
+                            obscureText: isObscure,
+                            decoration: InputDecoration(
+                              border: InputBorder.none,
+                              hintText: "Password",
+                              hintStyle: TextStyle(color: AppConstant.neutral30),
+                              suffix: Container(
+                                child: isObscure
+                                    ? Column(
+                                        children: [
+                                          SizedBox(height: 27),
+                                          InkWell(
+                                            onTap: () {
+                                              setState(
+                                                () {
+                                                  isObscure = !isObscure;
+                                                },
+                                              );
+                                            },
+                                            child: Text(
+                                              "Show",
+                                              style: TextStyle(
+                                                color: AppConstant.primary60,
+                                                fontWeight: FontWeight.w600,
+                                                fontSize: 14,
+                                              ),
+                                            ),
                                           ),
-                                        )
-                                      : Text(
-                                          "Hide",
-                                          style: TextStyle(
-                                            color: Color.fromRGBO(61, 97, 152, 1),
-                                            fontWeight: FontWeight.w600,
+                                        ],
+                                      )
+                                    : Column(
+                                        children: [
+                                          SizedBox(height: 27),
+                                          InkWell(
+                                            onTap: () {
+                                              setState(
+                                                () {
+                                                  isObscure = !isObscure;
+                                                },
+                                              );
+                                            },
+                                            child: Text(
+                                              "Hide",
+                                              style: TextStyle(
+                                                color: AppConstant.primary60,
+                                                fontWeight: FontWeight.w600,
+                                                fontSize: 14,
+                                              ),
+                                            ),
                                           ),
-                                        ),
-                                ),
+                                        ],
+                                      ),
                               ),
                             ),
                           ),
@@ -239,44 +320,40 @@ class _SignUpPageState extends State<SignUpPage> {
                     ),
                   ],
                 ),
-                SizedBox(height: 40),
-                // BlocListener(
-                //   bloc: registrationBloc,
-                //   listener: (context, state) {
-                //     if (state is RegistrationSuccessState) {
-                //       if (agreeToTerms == true) {
-                //         // Navigator.pushReplacementNamed(
-                //         //   context,
-                //         //   // Navigation.otpPage,
-                //         //   Navigation.categoryPage,
-                //         //   arguments: state.registrationResponseEntity.username,
-                //         // );
-                //       }
-                //     }
-                //   },
-                //   child: InkWell(
-                //     onTap: () {
-                //       // registrationBloc.add(RegistrationLoadingEvent());
-                //       // RegistrationRequestEntity registrationReqEnt = RegistrationRequestEntity();
-                //       // registrationReqEnt.fullName = fullNameController.text;
-                //       // registrationReqEnt.nickName = nickNameController.text;
-
-                //       // if (registrationReqEnt.password != registrationReqEnt.passwordConfirmation) {
-                //       //   toastMsg("Password doesn't match");
-                //       // } else {
-                //       // registrationBloc.add(RegistrationRequestEvent(registrationReqEnt));
-                //       // Navigator.pushNamed(
-                //       //   context,
-                //       //   Navigation.categoryPage,
-                //       //   arguments: registrationReqEnt,
-                //       // );
-                //       // }
-                //     },
-                //     child: SubmitButtonWidget(title: "Next"),
-                //   ),
-                // ),
-
-                // SizedBox(height: 16),
+                SizedBox(height: 20),
+                GetX<CreateAccountController>(
+                  builder: (controller) {
+                    if (controller.isLoading.value) {
+                      return Column(
+                        children: [
+                          CircularProgressIndicator(),
+                          SizedBox(height: 16),
+                        ],
+                      );
+                    } else {
+                      return Container();
+                    }
+                  },
+                ),
+                InkWell(
+                  onTap: () {
+                    if (choosenDomain == null) {
+                      toastMsg("You need to choose a domain from the available ones");
+                    } else if (mailController.text == "") {
+                      toastMsg("Please enter a valid mail address to continue");
+                    } else if (passwordController.text == "") {
+                      toastMsg("Please enter password to continue");
+                    } else if (passwordController.text != confirmPasswordController.text) {
+                      toastMsg("Passwords don't match");
+                    } else {
+                      SignupRequestEntity signupRequestEntity = SignupRequestEntity();
+                      signupRequestEntity.address = mailController.text + "@" + domainName;
+                      signupRequestEntity.password = passwordController.text;
+                      createAccountController.createAccount(signupRequestEntity, context);
+                    }
+                  },
+                  child: SubmitButtonWidget(title: "Create Account"),
+                ),
                 Row(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [

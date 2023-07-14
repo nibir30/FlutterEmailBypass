@@ -1,46 +1,43 @@
 import 'package:flutter/material.dart';
-import 'package:test_assignment/features/logIn/presentation/pages/login_page.dart';
+import 'package:flutter_easyloading/flutter_easyloading.dart';
 
-import 'features/search/presentation/pages/search_page.dart';
 import 'router/route_generator.dart';
 import 'router/routing_variables.dart';
 
-void main() {
+Future<void> main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+
   runApp(const MyApp());
 }
 
-class MyApp extends StatelessWidget {
+class MyApp extends StatefulWidget {
   const MyApp({Key? key}) : super(key: key);
+
+  @override
+  State<MyApp> createState() => _MyAppState();
+}
+
+class _MyAppState extends State<MyApp> {
+  @override
+  void initState() {
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
-      title: 'EmailBypasser',
+      title: 'Email Bypasser',
       theme: ThemeData(
         primarySwatch: Colors.blue,
+        textTheme: Theme.of(context).textTheme.apply(
+              fontSizeFactor: 1,
+              fontSizeDelta: 2.0,
+            ),
       ),
-      initialRoute: Navigation.authPage,
+      initialRoute: Navigation.startup,
       onGenerateRoute: RouteGenerator.generateRoute,
-      home: const MyHomePage(title: 'Home Page'),
-    );
-  }
-}
-
-class MyHomePage extends StatefulWidget {
-  const MyHomePage({Key? key, required this.title}) : super(key: key);
-
-  final String title;
-
-  @override
-  State<MyHomePage> createState() => _MyHomePageState();
-}
-
-class _MyHomePageState extends State<MyHomePage> {
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      body: LoginPage(),
+      builder: EasyLoading.init(),
     );
   }
 }
