@@ -10,6 +10,7 @@ import '../../../../router/routing_variables.dart';
 import '../../domain/entities/login_response_entity.dart';
 
 class LoginController extends GetxController {
+  var isLoading = false.obs;
   var loginResponse = LoginResponseEntity().obs;
 
   @override
@@ -18,9 +19,14 @@ class LoginController extends GetxController {
   }
 
   void login(LoginRequestEntity loginRequestEntity, BuildContext context) async {
+    isLoading.value = true;
+
     LoginRepository loginRepository = LoginRepositoryImpl();
     LoginUseCase loginUseCase = LoginUseCase(loginRepository: loginRepository);
+
     var response = await loginUseCase.login(loginRequestEntity);
+    isLoading.value = false;
+
     loginResponse.value = response!;
 
     if (response.message == null) {

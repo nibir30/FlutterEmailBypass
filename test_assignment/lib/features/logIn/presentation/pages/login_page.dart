@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:test_assignment/features/dashboard/presentation/getx/messages_controller.dart';
 import 'package:test_assignment/features/logIn/presentation/getx_login/login_controller.dart';
 import 'package:test_assignment/features/signUp/presentation/pages/sign_up_page.dart';
 
@@ -16,6 +17,8 @@ class LoginPage extends StatefulWidget {
 }
 
 class _LoginPageState extends State<LoginPage> {
+  final loginController = Get.put(LoginController());
+
   TextEditingController mailController = TextEditingController();
   TextEditingController passwordController = TextEditingController();
   bool isObscure = true;
@@ -27,8 +30,6 @@ class _LoginPageState extends State<LoginPage> {
 
   @override
   Widget build(BuildContext context) {
-    final loginController = Get.put(LoginController());
-
     return SafeArea(
       child: Scaffold(
         body: SingleChildScrollView(
@@ -158,6 +159,20 @@ class _LoginPageState extends State<LoginPage> {
                   ],
                 ),
                 SizedBox(height: 24),
+                GetX<LoginController>(
+                  builder: (controller) {
+                    if (controller.isLoading.value) {
+                      return Column(
+                        children: [
+                          CircularProgressIndicator(),
+                          SizedBox(height: 16),
+                        ],
+                      );
+                    } else {
+                      return Container();
+                    }
+                  },
+                ),
 
                 SizedBox(height: AppConstant.paddingSmall),
                 InkWell(

@@ -128,11 +128,11 @@ class _AppDrawerState extends State<AppDrawer> {
               ),
               InkWell(
                 onTap: () {
-                  Navigator.pushNamedAndRemoveUntil(
-                    context,
-                    Navigation.authPage,
-                    (route) => false,
-                  );
+                  // Navigator.pushNamedAndRemoveUntil(
+                  //   context,
+                  //   Navigation.authPage,
+                  //   (route) => false,
+                  // );
                   logoutBloc.add(RequestLogoutEvent());
                 },
                 child: Container(
@@ -161,7 +161,12 @@ class _AppDrawerState extends State<AppDrawer> {
                 listener: (context, state) {
                   if (state is LogoutErrorState) {
                   } else if (state is LogoutSuccessState) {
-                    Navigator.pushReplacementNamed(context, Navigation.authPage);
+                    // Navigator.pushReplacementNamed(context, Navigation.authPage);
+                    Navigator.pushNamedAndRemoveUntil(
+                      context,
+                      Navigation.authPage,
+                      (route) => false,
+                    );
                   }
                 },
                 child: BlocBuilder(
