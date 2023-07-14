@@ -1,4 +1,4 @@
-# Proxy EMail App
+# Proxy Email App
 
 A project containing Login, SignUp, Home screens, Buttons, Textfields and Widgets with attractive UI, input validation, built with Flutter.
 
