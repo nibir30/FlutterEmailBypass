@@ -36,7 +36,6 @@ class _MyAppState extends State<MyApp> {
             ),
       ),
       initialRoute: Navigation.startup,
-      // initialRoute: Navigation.invoicePage,
       onGenerateRoute: RouteGenerator.generateRoute,
       builder: EasyLoading.init(),
     );

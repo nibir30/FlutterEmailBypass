@@ -23,13 +23,13 @@ class StringHelper {
     Duration diff = DateTime.now().difference(input);
 
     if (diff.inDays >= 1) {
-      return '${diff.inDays}d ago';
+      return '${diff.inDays}d';
     } else if (diff.inHours >= 1) {
-      return '${diff.inHours}h ago';
+      return '${diff.inHours}h';
     } else if (diff.inMinutes >= 1) {
-      return '${diff.inMinutes}min ago';
+      return '${diff.inMinutes}min';
     } else if (diff.inSeconds >= 1) {
-      return '${diff.inSeconds}s ago';
+      return '${diff.inSeconds}s';
     } else {
       return 'just now';
     }
