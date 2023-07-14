@@ -102,7 +102,6 @@ class _DashBoardPageState extends State<DashBoardPage> {
                                                   SizedBox(width: 8),
                                                   Expanded(
                                                     child: Text(
-                                                      // "Data",
                                                       controller.messages.value.hydramember![messageIndex].subject.toString(),
                                                       style: ConstantTextStyles.bodyBold16(context),
                                                       overflow: TextOverflow.ellipsis,
@@ -115,7 +114,6 @@ class _DashBoardPageState extends State<DashBoardPage> {
                                                   //   style: ConstantTextStyles.bodySM14(context),
                                                   // ),
                                                   Text(
-                                                    // DateFormat('dd-MM-yyyy')
                                                     DateFormat('dd MMM')
                                                         .format(
                                                             DateTime.parse(controller.messages.value.hydramember![messageIndex].createdAt.toString())
