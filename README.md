@@ -24,3 +24,17 @@ If any model is modified, run on terminal "flutter packages pub run build_runner
 API Documentation: https://docs.mail.tm/
 
 Demo API: https://api.mail.tm/
+
+## Packages and libraries used
+  get: ^4.6.5
+  shared_preferences: ^2.0.12
+  cupertino_icons: ^1.0.2
+  json_annotation: ^4.0.1
+  json_serializable: ^4.1.1
+
+  flutter_bloc: ^7.3.3
+  http: ^0.13.4
+  flutter_easyloading: ^3.0.5
+  fluttertoast: ^8.0.8
+  intl: ^0.17.0
+  flutter_svg: ^1.0.1
