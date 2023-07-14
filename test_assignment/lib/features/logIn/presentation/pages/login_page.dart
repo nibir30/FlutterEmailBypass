@@ -3,7 +3,6 @@ import 'package:test_assignment/features/signUp/presentation/pages/sign_up_page.
 
 import '../../../../constants/app_constant.dart';
 import '../../../../constants/text_styles.dart';
-import '../../../../router/routing_variables.dart';
 import '../../../../shared/widgets/submit_button_widget.dart';
 
 class LoginPage extends StatefulWidget {
@@ -16,7 +15,6 @@ class LoginPage extends StatefulWidget {
 class _LoginPageState extends State<LoginPage> {
   TextEditingController phoneController = TextEditingController();
   TextEditingController passwordController = TextEditingController();
-  // LoginBloc loginBloc = LoginBloc();
   bool isObscure = true;
 
   @override
@@ -156,39 +154,6 @@ class _LoginPageState extends State<LoginPage> {
                   ],
                 ),
                 SizedBox(height: 24),
-                // BlocListener(
-                //   bloc: loginBloc,
-                //   listener: (BuildContext context, state) {
-                //     if (state is LoginSuccessState) {
-                //       LoginUserEntity? user = state.authEntity.loginUser;
-                //       if (user != null && user.isPhoneVerified == true) {
-                //         Navigator.pushReplacementNamed(
-                //           context,
-                //           Navigation.homePage,
-                //         );
-                //       } else {
-                //         Navigator.pushNamed(
-                //           context,
-                //           Navigation.otpPage,
-                //           arguments: user!.username,
-                //         );
-                //       }
-                //     }
-                //   },
-                //   child: BlocBuilder(
-                //     bloc: loginBloc,
-                //     builder: (BuildContext context, LoginState state) {
-                //       if (state is LoginLoadingState) {
-                //         //return Center(child: CircularProgressIndicator());
-                //       } else if (state is LoginErrorState) {
-                //         return Text(state.errorMsg, style: TextStyle(color: Colors.red));
-                //       } else {
-                //         return Container();
-                //       }
-                //       return Container();
-                //     },
-                //   ),
-                // ),
 
                 SizedBox(height: AppConstant.paddingSmall),
                 InkWell(
