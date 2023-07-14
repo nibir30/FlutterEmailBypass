@@ -8,7 +8,6 @@ class AvailableDomainsController extends GetxController {
 
   @override
   void onInit() {
-    // TODO: implement onInit
     super.onInit();
     getAvailableDomains();
   }
