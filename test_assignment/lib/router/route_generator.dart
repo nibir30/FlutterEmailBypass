@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:test_assignment/features/dashboard/presentation/pages/home_page.dart';
-import 'package:test_assignment/features/search/presentation/pages/search_page.dart';
 import 'package:test_assignment/features/signUp/presentation/pages/sign_up_page.dart';
 import 'package:test_assignment/features/startup/presentation/pages/startup_page.dart';
 

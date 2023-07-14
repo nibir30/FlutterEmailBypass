@@ -5,6 +5,7 @@ import 'package:test_assignment/features/signUp/domain/usecases/signup_usecase.d
 
 class AvailableDomainsController extends GetxController {
   var availableDomains = GetAvailableDomainsEntity().obs;
+  var isLoading = false.obs;
 
   @override
   void onInit() {
@@ -15,7 +16,9 @@ class AvailableDomainsController extends GetxController {
   void getAvailableDomains() async {
     SignupRepository signupRepository = SignupRepositoryImpl();
     SignupUseCase signupUseCase = SignupUseCase(signupRepository: signupRepository);
+    isLoading.value = true;
     var response = await signupUseCase.getAvailableDomains();
+    isLoading.value = false;
     availableDomains.value = response!;
   }
 }

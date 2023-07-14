@@ -173,7 +173,6 @@ class _LoginPageState extends State<LoginPage> {
                     }
                   },
                 ),
-
                 SizedBox(height: AppConstant.paddingSmall),
                 InkWell(
                   onTap: () {

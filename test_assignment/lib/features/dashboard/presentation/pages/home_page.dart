@@ -33,7 +33,6 @@ class _DashBoardPageState extends State<DashBoardPage> {
 
   @override
   Widget build(BuildContext pageContext) {
-    print(getMessagesController.isLoading.value);
     final size = MediaQuery.of(pageContext).size;
 
     return SafeArea(

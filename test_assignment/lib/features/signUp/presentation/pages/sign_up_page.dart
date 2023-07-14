@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:test_assignment/core/utils/toast.dart';
 import 'package:test_assignment/features/signUp/domain/entities/hydra_member_entity.dart';
 import 'package:test_assignment/features/signUp/domain/entities/signup_request_entity.dart';
 import 'package:test_assignment/features/signUp/presentation/get_signup/create_account_controller.dart';
@@ -66,59 +67,65 @@ class _SignUpPageState extends State<SignUpPage> {
                         SizedBox(height: 8),
                         GetX<AvailableDomainsController>(
                           builder: (controller) {
-                            return Container(
-                              width: size.width,
-                              padding: EdgeInsets.symmetric(horizontal: 16),
-                              height: 50,
-                              decoration: BoxDecoration(
-                                borderRadius: BorderRadius.circular(12),
-                                border: Border.all(color: AppConstant.neutral30),
-                              ),
-                              child: DropdownButton<String>(
-                                dropdownColor: AppConstant.neutral20,
-                                borderRadius: BorderRadius.circular(16),
-                                elevation: 0,
-                                icon: Icon(Icons.keyboard_arrow_down),
-                                isExpanded: true,
-                                underline: SizedBox(),
-                                hint: Text(
-                                  "Select Domain",
-                                  style: TextStyle(
-                                    color: AppConstant.neutral60,
-                                    fontSize: 14,
-                                  ),
+                            if (controller.isLoading.value) {
+                              return Center(
+                                child: CircularProgressIndicator(),
+                              );
+                            } else {
+                              return Container(
+                                width: size.width,
+                                padding: EdgeInsets.symmetric(horizontal: 16),
+                                height: 50,
+                                decoration: BoxDecoration(
+                                  borderRadius: BorderRadius.circular(12),
+                                  border: Border.all(color: AppConstant.neutral30),
                                 ),
-                                value: choosenDomain,
-                                items: controller.availableDomains.value.hydramember != null
-                                    ? controller.availableDomains.value.hydramember!.map<DropdownMenuItem<String>>(
-                                        (HydraMemberEntity value) {
-                                          return DropdownMenuItem<String>(
-                                            value: value.domain,
-                                            child: Container(
-                                              child: Text(value.domain.toString()),
-                                            ),
-                                          );
-                                        },
-                                      ).toList()
-                                    : ["No Available Domain"].map<DropdownMenuItem<String>>(
-                                        (String value) {
-                                          return DropdownMenuItem<String>(
-                                            value: value,
-                                            child: Container(
-                                              child: Text(value.toString()),
-                                            ),
-                                          );
-                                        },
-                                      ).toList(),
-                                onChanged: (newValue) {
-                                  setState(() {
-                                    choosenDomain = newValue;
-                                    domainName = newValue!;
-                                    // genderController.text = newValue.toString();
-                                  });
-                                },
-                              ),
-                            );
+                                child: DropdownButton<String>(
+                                  dropdownColor: AppConstant.neutral20,
+                                  borderRadius: BorderRadius.circular(16),
+                                  elevation: 0,
+                                  icon: Icon(Icons.keyboard_arrow_down),
+                                  isExpanded: true,
+                                  underline: SizedBox(),
+                                  hint: Text(
+                                    "Select Domain",
+                                    style: TextStyle(
+                                      color: AppConstant.neutral60,
+                                      fontSize: 14,
+                                    ),
+                                  ),
+                                  value: choosenDomain,
+                                  items: controller.availableDomains.value.hydramember != null
+                                      ? controller.availableDomains.value.hydramember!.map<DropdownMenuItem<String>>(
+                                          (HydraMemberEntity value) {
+                                            return DropdownMenuItem<String>(
+                                              value: value.domain,
+                                              child: Container(
+                                                child: Text(value.domain.toString()),
+                                              ),
+                                            );
+                                          },
+                                        ).toList()
+                                      : ["No Available Domain"].map<DropdownMenuItem<String>>(
+                                          (String value) {
+                                            return DropdownMenuItem<String>(
+                                              value: value,
+                                              child: Container(
+                                                child: Text(value.toString()),
+                                              ),
+                                            );
+                                          },
+                                        ).toList(),
+                                  onChanged: (newValue) {
+                                    setState(() {
+                                      choosenDomain = newValue;
+                                      domainName = newValue!;
+                                      // genderController.text = newValue.toString();
+                                    });
+                                  },
+                                ),
+                              );
+                            }
                           },
                         ),
                         SizedBox(height: 24),
@@ -176,7 +183,7 @@ class _SignUpPageState extends State<SignUpPage> {
                             borderRadius: BorderRadius.circular(12),
                           ),
                           child: Padding(
-                            padding: EdgeInsets.only(top: 18),
+                            padding: EdgeInsets.only(right: 8),
                             child: TextField(
                               style: ConstantTextStyles.body16(context),
                               obscureText: isObscure,
@@ -187,8 +194,8 @@ class _SignUpPageState extends State<SignUpPage> {
                                 hintStyle: TextStyle(
                                   color: AppConstant.textFieldBorderColor,
                                 ),
-                                suffix: TextButton(
-                                  onPressed: () {
+                                suffix: InkWell(
+                                  onTap: () {
                                     setState(
                                       () {
                                         isObscure = !isObscure;
@@ -236,7 +243,7 @@ class _SignUpPageState extends State<SignUpPage> {
                             borderRadius: BorderRadius.circular(12),
                           ),
                           child: Padding(
-                            padding: EdgeInsets.only(top: 18),
+                            padding: EdgeInsets.only(right: 8),
                             child: TextField(
                               style: ConstantTextStyles.body16(context),
                               obscureText: isObscure,
@@ -247,8 +254,8 @@ class _SignUpPageState extends State<SignUpPage> {
                                 hintStyle: TextStyle(
                                   color: AppConstant.textFieldBorderColor,
                                 ),
-                                suffix: TextButton(
-                                  onPressed: () {
+                                suffix: InkWell(
+                                  onTap: () {
                                     setState(
                                       () {
                                         isObscure = !isObscure;
@@ -259,14 +266,14 @@ class _SignUpPageState extends State<SignUpPage> {
                                       ? Text(
                                           "Show",
                                           style: TextStyle(
-                                            color: Color.fromRGBO(61, 97, 152, 1),
+                                            color: AppConstant.primary60,
                                             fontWeight: FontWeight.w600,
                                           ),
                                         )
                                       : Text(
                                           "Hide",
                                           style: TextStyle(
-                                            color: Color.fromRGBO(61, 97, 152, 1),
+                                            color: AppConstant.primary60,
                                             fontWeight: FontWeight.w600,
                                           ),
                                         ),
@@ -280,13 +287,37 @@ class _SignUpPageState extends State<SignUpPage> {
                     ),
                   ],
                 ),
-                SizedBox(height: 40),
+                SizedBox(height: 20),
+                GetX<CreateAccountController>(
+                  builder: (controller) {
+                    if (controller.isLoading.value) {
+                      return Column(
+                        children: [
+                          CircularProgressIndicator(),
+                          SizedBox(height: 16),
+                        ],
+                      );
+                    } else {
+                      return Container();
+                    }
+                  },
+                ),
                 InkWell(
                   onTap: () {
-                    SignupRequestEntity signupRequestEntity = SignupRequestEntity();
-                    signupRequestEntity.address = mailController.text + "@" + domainName;
-                    signupRequestEntity.password = passwordController.text;
-                    createAccountController.createAccount(signupRequestEntity, context);
+                    if (choosenDomain == null) {
+                      toastMsg("You need to choose a domain from the available ones");
+                    } else if (mailController.text == "") {
+                      toastMsg("Please enter a valid mail address to continue");
+                    } else if (passwordController.text == "") {
+                      toastMsg("Please enter password to continue");
+                    } else if (passwordController.text != confirmPasswordController.text) {
+                      toastMsg("Passwords don't match");
+                    } else {
+                      SignupRequestEntity signupRequestEntity = SignupRequestEntity();
+                      signupRequestEntity.address = mailController.text + "@" + domainName;
+                      signupRequestEntity.password = passwordController.text;
+                      createAccountController.createAccount(signupRequestEntity, context);
+                    }
                   },
                   child: SubmitButtonWidget(title: "Create Account"),
                 ),

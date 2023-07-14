@@ -9,6 +9,7 @@ import 'package:test_assignment/router/routing_variables.dart';
 
 class CreateAccountController extends GetxController {
   var signupResponse = SignupResponseEntity().obs;
+  var isLoading = false.obs;
 
   @override
   void onInit() {
@@ -18,8 +19,11 @@ class CreateAccountController extends GetxController {
   void createAccount(SignupRequestEntity signupRequestEntity, BuildContext context) async {
     SignupRepository signupRepository = SignupRepositoryImpl();
     SignupUseCase signupUseCase = SignupUseCase(signupRepository: signupRepository);
+    isLoading.value = true;
+
     var response = await signupUseCase.createAccount(signupRequestEntity);
     signupResponse.value = response!;
+    isLoading.value = false;
 
     if (response.id != null) {
       toastMsg("Your Account has been created!");
