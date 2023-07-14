@@ -45,17 +45,18 @@ class _AppDrawerState extends State<AppDrawer> {
                 child: Column(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
-                    // !darkThemeProvider.getDarkThemeStatus()
-                    //     ? Image.asset('lib/assets/images/medibee_logo.png')
-                    //     : Image.asset('lib/assets/images/logo_dark_mode.jpg'),
                     SizedBox(height: 8),
+                    Text(
+                      "Proxy Email App",
+                      style: ConstantTextStyles.bodyBold16(context).copyWith(color: AppConstant.primary60),
+                    ),
                     Text(
                       "version: 1.0.0",
                       style: TextStyle(
                         fontSize: 14,
                         color: AppConstant.secondaryTextColor60,
                       ),
-                    )
+                    ),
                   ],
                 ),
               ),
@@ -82,12 +83,7 @@ class _AppDrawerState extends State<AppDrawer> {
                 ),
               ),
               InkWell(
-                onTap: () {
-                  // Navigator.pushNamed(
-                  //   context,
-                  //   Navigation.helpDeskPage,
-                  // );
-                },
+                onTap: () {},
                 child: Container(
                   height: 56,
                   padding: const EdgeInsets.only(left: 17.0),
@@ -130,11 +126,6 @@ class _AppDrawerState extends State<AppDrawer> {
               ),
               InkWell(
                 onTap: () {
-                  // Navigator.pushNamedAndRemoveUntil(
-                  //   context,
-                  //   Navigation.authPage,
-                  //   (route) => false,
-                  // );
                   logoutBloc.add(RequestLogoutEvent());
                 },
                 child: Container(
@@ -163,7 +154,6 @@ class _AppDrawerState extends State<AppDrawer> {
                 listener: (context, state) {
                   if (state is LogoutErrorState) {
                   } else if (state is LogoutSuccessState) {
-                    // Navigator.pushReplacementNamed(context, Navigation.authPage);
                     Navigator.pushNamedAndRemoveUntil(
                       context,
                       Navigation.authPage,
@@ -174,9 +164,6 @@ class _AppDrawerState extends State<AppDrawer> {
                 child: BlocBuilder(
                   bloc: logoutBloc,
                   builder: (context, state) {
-                    if (state is LogoutLoadingState) {
-                      //return Center(child: CircularProgressIndicator());
-                    }
                     return Container();
                   },
                 ),
