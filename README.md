@@ -19,7 +19,7 @@ A project containing Login, SignUp, Home screens, Buttons, Textfields and Widget
 
 ## APK link
 
-link: https://drive.google.com/drive/folders/1qbEHT8CwJY9fiqaLTJj4kWcSJ56LWMFw?usp=sharing](https://drive.google.com/drive/folders/1qbEHT8CwJY9fiqaLTJj4kWcSJ56LWMFw?usp=sharing
+link: https://drive.google.com/drive/folders/1qbEHT8CwJY9fiqaLTJj4kWcSJ56LWMFw?usp=sharing
 
 
 ## Instructions
