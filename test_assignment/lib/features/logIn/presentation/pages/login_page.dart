@@ -1,9 +1,12 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
+import 'package:test_assignment/features/logIn/presentation/getx_login/login_controller.dart';
 import 'package:test_assignment/features/signUp/presentation/pages/sign_up_page.dart';
 
 import '../../../../constants/app_constant.dart';
 import '../../../../constants/text_styles.dart';
 import '../../../../shared/widgets/submit_button_widget.dart';
+import '../../domain/entities/login_request_entity.dart';
 
 class LoginPage extends StatefulWidget {
   const LoginPage({Key? key}) : super(key: key);
@@ -13,7 +16,7 @@ class LoginPage extends StatefulWidget {
 }
 
 class _LoginPageState extends State<LoginPage> {
-  TextEditingController phoneController = TextEditingController();
+  TextEditingController mailController = TextEditingController();
   TextEditingController passwordController = TextEditingController();
   bool isObscure = true;
 
@@ -24,6 +27,8 @@ class _LoginPageState extends State<LoginPage> {
 
   @override
   Widget build(BuildContext context) {
+    final loginController = Get.put(LoginController());
+
     return SafeArea(
       child: Scaffold(
         body: SingleChildScrollView(
@@ -69,10 +74,9 @@ class _LoginPageState extends State<LoginPage> {
                       ),
                       child: TextField(
                         style: ConstantTextStyles.body16(context),
-                        keyboardType: TextInputType.phone,
-                        controller: phoneController,
+                        controller: mailController,
                         decoration: InputDecoration(
-                          hintText: "Enter your phone no",
+                          hintText: "Enter your mail address",
                           border: InputBorder.none,
                           hintStyle: TextStyle(color: AppConstant.textFieldBorderColor),
                         ),
@@ -158,8 +162,10 @@ class _LoginPageState extends State<LoginPage> {
                 SizedBox(height: AppConstant.paddingSmall),
                 InkWell(
                   onTap: () {
-                    // LoginRequestEntity loginRE = LoginRequestEntity(phoneController.text, passwordController.text);
-                    // loginBloc.add(RequestLoginEvent(loginRE));
+                    LoginRequestEntity loginRE = LoginRequestEntity();
+                    loginRE.address = mailController.text;
+                    loginRE.password = passwordController.text;
+                    loginController.login(loginRE, context);
                   },
                   child: SubmitButtonWidget(title: "Sign in"),
                 ),
