@@ -1,10 +1,11 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
+import 'package:test_assignment/features/signUp/domain/entities/hydra_member_entity.dart';
 
 import '../../../../constants/app_constant.dart';
 import '../../../../constants/text_styles.dart';
-import '../../../../core/utils/toast.dart';
 import '../../../../router/routing_variables.dart';
-import '../../../../shared/widgets/submit_button_widget.dart';
+import '../get_signup/available_domains_controller.dart';
 
 class SignUpPage extends StatefulWidget {
   const SignUpPage({Key? key}) : super(key: key);
@@ -15,6 +16,7 @@ class SignUpPage extends StatefulWidget {
 
 class _SignUpPageState extends State<SignUpPage> {
   String domainName = "@example.com";
+  String? choosenDomain;
   List<String> collegeNames = [];
   TextEditingController fullNameController = TextEditingController();
   TextEditingController mailController = TextEditingController();
@@ -33,6 +35,9 @@ class _SignUpPageState extends State<SignUpPage> {
 
   @override
   Widget build(BuildContext context) {
+    final availableDomainsController = Get.put(AvailableDomainsController());
+    final size = MediaQuery.of(context).size;
+
     return SafeArea(
       child: Scaffold(
         body: SingleChildScrollView(
@@ -41,6 +46,11 @@ class _SignUpPageState extends State<SignUpPage> {
             child: Column(
               children: [
                 SizedBox(height: 16),
+                // GetX<AvailableDomainsController>(
+                //   builder: (controller) {
+                //     return Text(controller.availableDomains.value.hydramember![0].domain.toString());
+                //   },
+                // ),
                 Row(
                   children: [
                     Text(
@@ -61,25 +71,73 @@ class _SignUpPageState extends State<SignUpPage> {
                           style: ConstantTextStyles.subTitle14(context),
                         ),
                         SizedBox(height: 8),
-                        Container(
-                          // height: 60,
-                          padding: EdgeInsets.only(left: 12),
-                          decoration: BoxDecoration(
-                            border: Border.all(
-                              color: Theme.of(context).brightness == Brightness.light ? AppConstant.neutral30 : AppConstant.neutral70,
-                            ),
-                            borderRadius: BorderRadius.circular(12),
-                          ),
-                          child: TextField(
-                            style: ConstantTextStyles.body16(context),
-                            controller: fullNameController,
-                            decoration: InputDecoration(
-                              hintText: "Enter your full name",
-                              border: InputBorder.none,
-                              hintStyle: TextStyle(color: AppConstant.textFieldBorderColor),
-                            ),
-                          ),
+                        GetX<AvailableDomainsController>(
+                          builder: (controller) {
+                            return Container(
+                              width: size.width,
+                              padding: EdgeInsets.symmetric(horizontal: 16),
+                              height: 50,
+                              decoration: BoxDecoration(
+                                // color: AppConstant.neutral10,
+                                borderRadius: BorderRadius.circular(12),
+                                border: Border.all(color: AppConstant.neutral30),
+                              ),
+                              child: DropdownButton<String>(
+                                dropdownColor: AppConstant.neutral20,
+                                borderRadius: BorderRadius.circular(16),
+                                elevation: 0,
+                                icon: Icon(Icons.keyboard_arrow_down),
+                                isExpanded: true,
+                                underline: SizedBox(),
+                                hint: Text(
+                                  "Select Domain",
+                                  style: TextStyle(
+                                    color: AppConstant.neutral60,
+                                    fontSize: 14,
+                                  ),
+                                ),
+                                value: choosenDomain,
+                                items: controller.availableDomains.value.hydramember!.map<DropdownMenuItem<String>>(
+                                  (HydraMemberEntity value) {
+                                    return DropdownMenuItem<String>(
+                                      value: value.domain,
+                                      child: Container(
+                                        child: Text(value.domain.toString()),
+                                      ),
+                                    );
+                                  },
+                                ).toList(),
+                                onChanged: (newValue) {
+                                  setState(() {
+                                    choosenDomain = newValue;
+                                    domainName = newValue!;
+                                    // genderController.text = newValue.toString();
+                                  });
+                                },
+                              ),
+                            );
+                          },
                         ),
+                        // Container(
+                        //   // height: 60,
+                        //   padding: EdgeInsets.only(left: 12),
+                        //   decoration: BoxDecoration(
+                        //     border: Border.all(
+                        //       color: Theme.of(context).brightness == Brightness.light ? AppConstant.neutral30 : AppConstant.neutral70,
+                        //     ),
+                        //     borderRadius: BorderRadius.circular(12),
+                        //   ),
+                        //   child: TextField(
+                        //     style: ConstantTextStyles.body16(context),
+                        //     controller: fullNameController,
+                        //     decoration: InputDecoration(
+                        //       hintText: "Enter your full name",
+                        //       border: InputBorder.none,
+                        //       hintStyle: TextStyle(color: AppConstant.textFieldBorderColor),
+                        //     ),
+                        //   ),
+                        // ),
+
                         SizedBox(height: 24),
                       ],
                     ),
@@ -105,7 +163,7 @@ class _SignUpPageState extends State<SignUpPage> {
                             controller: mailController,
                             decoration: InputDecoration(
                               suffix: Text(
-                                domainName + " ",
+                                "@" + domainName + " ",
                                 style: ConstantTextStyles.bodySM14(context).copyWith(color: Colors.black),
                               ),
                               hintText: "Enter username",

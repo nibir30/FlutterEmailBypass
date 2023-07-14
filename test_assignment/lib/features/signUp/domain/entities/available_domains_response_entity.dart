@@ -7,11 +7,11 @@ class GetAvailableDomainsEntity {
   List<HydraMemberEntity>? hydramember;
   int? hydratotalItems;
 
-  GetAvailableDomainsEntity(
+  GetAvailableDomainsEntity({
     this.acontext,
     this.aid,
     this.atype,
     this.hydramember,
     this.hydratotalItems,
-  );
+  });
 }
