@@ -14,6 +14,10 @@ A project containing Login, SignUp, Home screens, Buttons, Textfields and Widget
 
 - Modified Clean Architecture has been followed throughout the project.
 - GetX package has been used for state management
+## APK link
+
+link: https://drive.google.com/drive/folders/1qbEHT8CwJY9fiqaLTJj4kWcSJ56LWMFw?usp=sharing
+
 
 ## Instructions
 
@@ -47,3 +51,4 @@ Demo API: https://api.mail.tm/
   intl: ^0.17.0
   
   flutter_svg: ^1.0.1
+
