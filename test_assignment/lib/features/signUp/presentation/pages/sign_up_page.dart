@@ -174,50 +174,68 @@ class _SignUpPageState extends State<SignUpPage> {
                         ),
                         SizedBox(height: 8),
                         Container(
-                          height: 50,
-                          padding: EdgeInsets.only(left: 12),
+                          height: 48,
                           decoration: BoxDecoration(
                             border: Border.all(
                               color: Theme.of(context).brightness == Brightness.light ? AppConstant.neutral30 : AppConstant.neutral70,
                             ),
-                            borderRadius: BorderRadius.circular(12),
+                            borderRadius: BorderRadius.circular(10),
                           ),
-                          child: Padding(
-                            padding: EdgeInsets.only(right: 8),
-                            child: TextField(
-                              style: ConstantTextStyles.body16(context),
-                              obscureText: isObscure,
-                              controller: passwordController,
-                              decoration: InputDecoration(
-                                hintText: "Password",
-                                border: InputBorder.none,
-                                hintStyle: TextStyle(
-                                  color: AppConstant.textFieldBorderColor,
-                                ),
-                                suffix: InkWell(
-                                  onTap: () {
-                                    setState(
-                                      () {
-                                        isObscure = !isObscure;
-                                      },
-                                    );
-                                  },
-                                  child: isObscure
-                                      ? Text(
-                                          "Show",
-                                          style: TextStyle(
-                                            color: AppConstant.primary60,
-                                            fontWeight: FontWeight.w600,
+                          padding: EdgeInsets.symmetric(horizontal: 16),
+                          child: TextField(
+                            style: ConstantTextStyles.body16(context),
+                            controller: passwordController,
+                            obscureText: isObscure,
+                            decoration: InputDecoration(
+                              border: InputBorder.none,
+                              hintText: "Password",
+                              hintStyle: TextStyle(color: AppConstant.neutral30),
+                              suffix: Container(
+                                child: isObscure
+                                    ? Column(
+                                        children: [
+                                          SizedBox(height: 27),
+                                          InkWell(
+                                            onTap: () {
+                                              setState(
+                                                () {
+                                                  isObscure = !isObscure;
+                                                },
+                                              );
+                                            },
+                                            child: Text(
+                                              "Show",
+                                              style: TextStyle(
+                                                color: AppConstant.primary60,
+                                                fontWeight: FontWeight.w600,
+                                                fontSize: 14,
+                                              ),
+                                            ),
                                           ),
-                                        )
-                                      : Text(
-                                          "Hide",
-                                          style: TextStyle(
-                                            color: AppConstant.primary60,
-                                            fontWeight: FontWeight.w600,
+                                        ],
+                                      )
+                                    : Column(
+                                        children: [
+                                          SizedBox(height: 27),
+                                          InkWell(
+                                            onTap: () {
+                                              setState(
+                                                () {
+                                                  isObscure = !isObscure;
+                                                },
+                                              );
+                                            },
+                                            child: Text(
+                                              "Hide",
+                                              style: TextStyle(
+                                                color: AppConstant.primary60,
+                                                fontWeight: FontWeight.w600,
+                                                fontSize: 14,
+                                              ),
+                                            ),
                                           ),
-                                        ),
-                                ),
+                                        ],
+                                      ),
                               ),
                             ),
                           ),
@@ -234,50 +252,68 @@ class _SignUpPageState extends State<SignUpPage> {
                         ),
                         SizedBox(height: 8),
                         Container(
-                          height: 50,
-                          padding: EdgeInsets.only(left: 12),
+                          height: 48,
                           decoration: BoxDecoration(
                             border: Border.all(
                               color: Theme.of(context).brightness == Brightness.light ? AppConstant.neutral30 : AppConstant.neutral70,
                             ),
-                            borderRadius: BorderRadius.circular(12),
+                            borderRadius: BorderRadius.circular(10),
                           ),
-                          child: Padding(
-                            padding: EdgeInsets.only(right: 8),
-                            child: TextField(
-                              style: ConstantTextStyles.body16(context),
-                              obscureText: isObscure,
-                              controller: confirmPasswordController,
-                              decoration: InputDecoration(
-                                hintText: "Password",
-                                border: InputBorder.none,
-                                hintStyle: TextStyle(
-                                  color: AppConstant.textFieldBorderColor,
-                                ),
-                                suffix: InkWell(
-                                  onTap: () {
-                                    setState(
-                                      () {
-                                        isObscure = !isObscure;
-                                      },
-                                    );
-                                  },
-                                  child: isObscure
-                                      ? Text(
-                                          "Show",
-                                          style: TextStyle(
-                                            color: AppConstant.primary60,
-                                            fontWeight: FontWeight.w600,
+                          padding: EdgeInsets.symmetric(horizontal: 16),
+                          child: TextField(
+                            style: ConstantTextStyles.body16(context),
+                            controller: confirmPasswordController,
+                            obscureText: isObscure,
+                            decoration: InputDecoration(
+                              border: InputBorder.none,
+                              hintText: "Password",
+                              hintStyle: TextStyle(color: AppConstant.neutral30),
+                              suffix: Container(
+                                child: isObscure
+                                    ? Column(
+                                        children: [
+                                          SizedBox(height: 27),
+                                          InkWell(
+                                            onTap: () {
+                                              setState(
+                                                () {
+                                                  isObscure = !isObscure;
+                                                },
+                                              );
+                                            },
+                                            child: Text(
+                                              "Show",
+                                              style: TextStyle(
+                                                color: AppConstant.primary60,
+                                                fontWeight: FontWeight.w600,
+                                                fontSize: 14,
+                                              ),
+                                            ),
                                           ),
-                                        )
-                                      : Text(
-                                          "Hide",
-                                          style: TextStyle(
-                                            color: AppConstant.primary60,
-                                            fontWeight: FontWeight.w600,
+                                        ],
+                                      )
+                                    : Column(
+                                        children: [
+                                          SizedBox(height: 27),
+                                          InkWell(
+                                            onTap: () {
+                                              setState(
+                                                () {
+                                                  isObscure = !isObscure;
+                                                },
+                                              );
+                                            },
+                                            child: Text(
+                                              "Hide",
+                                              style: TextStyle(
+                                                color: AppConstant.primary60,
+                                                fontWeight: FontWeight.w600,
+                                                fontSize: 14,
+                                              ),
+                                            ),
                                           ),
-                                        ),
-                                ),
+                                        ],
+                                      ),
                               ),
                             ),
                           ),

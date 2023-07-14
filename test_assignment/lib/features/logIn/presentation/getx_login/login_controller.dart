@@ -32,7 +32,12 @@ class LoginController extends GetxController {
     if (response.message == null) {
       userInfo.setUserData(response);
       toastMsg("Welcome!");
-      Navigator.pushNamed(context, Navigation.homePage);
+      // Navigator.pushNamed(context, Navigation.homePage);
+      Navigator.pushNamedAndRemoveUntil(
+        context,
+        Navigation.homePage,
+        (route) => false,
+      );
     } else {
       toastMsg(response.message.toString());
     }

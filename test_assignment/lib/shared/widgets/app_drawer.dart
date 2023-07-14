@@ -61,6 +61,7 @@ class _AppDrawerState extends State<AppDrawer> {
               ),
               Divider(color: Colors.grey),
               InkWell(
+                onTap: () {},
                 child: Container(
                   height: 56,
                   padding: const EdgeInsets.only(left: 17.0),
@@ -107,6 +108,7 @@ class _AppDrawerState extends State<AppDrawer> {
                 ),
               ),
               InkWell(
+                onTap: () {},
                 child: Container(
                   height: 56,
                   padding: const EdgeInsets.only(left: 17.0),

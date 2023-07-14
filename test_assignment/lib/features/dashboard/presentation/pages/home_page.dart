@@ -59,7 +59,8 @@ class _DashBoardPageState extends State<DashBoardPage> {
                     return Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        if (controller.messages.value.hydramember.toString() == "[]") Center(child: Text("You have No messages")),
+                        if (controller.messages.value.hydramember.toString() == "[]") Center(child: Text("You have No message")),
+                        if (controller.messages.value.aid == null && !controller.isLoading.value) Center(child: Text("You have No message")),
                         if (controller.isLoading.value) Center(child: CircularProgressIndicator()),
                         ListView.builder(
                           physics: NeverScrollableScrollPhysics(),
@@ -97,14 +98,22 @@ class _DashBoardPageState extends State<DashBoardPage> {
                                               child: Text(
                                                 // "Data",
                                                 controller.messages.value.hydramember![messageIndex].subject.toString(),
-                                                style: ConstantTextStyles.body16(context),
+                                                style: ConstantTextStyles.bodyBold16(context),
                                                 overflow: TextOverflow.ellipsis,
                                               ),
                                             ),
+                                            // Text(
+                                            //   StringHelper.convertTimeToAgoShort(
+                                            //     DateTime.parse(controller.messages.value.hydramember![messageIndex].createdAt.toString()),
+                                            //   ),
+                                            //   style: ConstantTextStyles.bodySM14(context),
+                                            // ),
                                             Text(
-                                              StringHelper.convertTimeToAgoShort(
-                                                DateTime.parse(controller.messages.value.hydramember![messageIndex].createdAt.toString()),
-                                              ),
+                                              // DateFormat('dd-MM-yyyy')
+                                              DateFormat('dd MMM')
+                                                  .format(DateTime.parse(controller.messages.value.hydramember![messageIndex].createdAt.toString())
+                                                      .toLocal())
+                                                  .toString(),
                                               style: ConstantTextStyles.bodySM14(context),
                                             ),
                                             if (isSectionOpen[messageIndex])
@@ -134,6 +143,10 @@ class _DashBoardPageState extends State<DashBoardPage> {
                                           crossAxisAlignment: CrossAxisAlignment.start,
                                           children: [
                                             Text(
+                                              "To: " + controller.messages.value.hydramember![messageIndex].to![0].address.toString(),
+                                              style: ConstantTextStyles.subTitle14(context).copyWith(color: AppConstant.neutral60),
+                                            ),
+                                            Text(
                                               "From: " + controller.messages.value.hydramember![messageIndex].from!.address.toString(),
                                               style: ConstantTextStyles.subTitle14(context),
                                             ),
@@ -151,7 +164,7 @@ class _DashBoardPageState extends State<DashBoardPage> {
                                             SizedBox(height: 16),
                                             Text(
                                               "Sent at: " +
-                                                  DateFormat('hh:mm a, EEE, dd-MM-yyyy')
+                                                  DateFormat('hh:mm a, EEE, dd MMM yyyy')
                                                       .format(
                                                           DateTime.parse(controller.messages.value.hydramember![messageIndex].createdAt.toString())
                                                               .toLocal())
