@@ -13,11 +13,6 @@ class LoginController extends GetxController {
   var isLoading = false.obs;
   var loginResponse = LoginResponseEntity().obs;
 
-  @override
-  void onInit() {
-    super.onInit();
-  }
-
   void login(LoginRequestEntity loginRequestEntity, BuildContext context) async {
     isLoading.value = true;
 

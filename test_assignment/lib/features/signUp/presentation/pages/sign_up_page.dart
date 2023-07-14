@@ -101,9 +101,7 @@ class _SignUpPageState extends State<SignUpPage> {
                                           (HydraMemberEntity value) {
                                             return DropdownMenuItem<String>(
                                               value: value.domain,
-                                              child: Container(
-                                                child: Text(value.domain.toString()),
-                                              ),
+                                              child: Text(value.domain.toString()),
                                             );
                                           },
                                         ).toList()
@@ -111,9 +109,7 @@ class _SignUpPageState extends State<SignUpPage> {
                                           (String value) {
                                             return DropdownMenuItem<String>(
                                               value: value,
-                                              child: Container(
-                                                child: Text(value.toString()),
-                                              ),
+                                              child: Text(value.toString()),
                                             );
                                           },
                                         ).toList(),

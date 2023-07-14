@@ -1,14 +1,11 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:get/get.dart';
 import 'package:intl/intl.dart';
-import 'package:test_assignment/core/user_info.dart';
 import 'package:test_assignment/features/dashboard/presentation/getx/messages_controller.dart';
 
 import '../../../../constants/app_constant.dart';
 import '../../../../constants/text_styles.dart';
 import '../../../../shared/Helpers/image_helper.dart';
-import '../../../../shared/Helpers/string_helper.dart';
 import '../../../../shared/widgets/app_drawer.dart';
 import '../../../../shared/widgets/new_app_bar.dart';
 

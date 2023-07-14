@@ -54,7 +54,7 @@ class AppConstant {
   ];
   static const List<BoxShadow> shadow0340 = [
     BoxShadow(color: Color.fromRGBO(0, 0, 0, 0.05), offset: Offset(0, 3.0), blurRadius: 4.0, spreadRadius: 0.0),
-    BoxShadow(color: Colors.white, offset: const Offset(0.0, 0.0), blurRadius: 0.0, spreadRadius: 0.0)
+    BoxShadow(color: Colors.white, offset: Offset(0.0, 0.0), blurRadius: 0.0, spreadRadius: 0.0)
   ];
 
   static ThemeData lightTheme(BuildContext context) {

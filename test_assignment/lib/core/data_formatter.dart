@@ -1,10 +1,8 @@
 import 'dart:math';
 
-import 'package:intl/intl.dart';
-
 class DataFormatter {
   static List shuffle(List items) {
-    var random = new Random();
+    var random = Random();
 
     // Go through all elements.
     for (var i = items.length - 1; i > 0; i--) {

@@ -7,11 +7,6 @@ class AvailableDomainsController extends GetxController {
   var availableDomains = GetAvailableDomainsEntity().obs;
   var isLoading = false.obs;
 
-  @override
-  void onInit() {
-    super.onInit();
-  }
-
   void getAvailableDomains() async {
     SignupRepository signupRepository = SignupRepositoryImpl();
     SignupUseCase signupUseCase = SignupUseCase(signupRepository: signupRepository);

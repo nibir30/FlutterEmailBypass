@@ -1,7 +1,4 @@
 import 'package:flutter/cupertino.dart';
-// import 'package:medi_bee/core/app_config.dart';
-// import 'package:medi_bee/features/authentication/domain/entities/login_response_entity.dart';
-import 'package:rxdart/rxdart.dart';
 
 import '../features/logIn/domain/entities/login_response_entity.dart';
 import 'data_manager.dart';
@@ -46,7 +43,6 @@ class UserInfo {
       'Content-Type': 'application/json',
       if (userInfo.authToken.isNotEmpty) "AuthenticationToken": userInfo.authToken,
       if (userInfo.authToken.isNotEmpty) "Authorization": "Bearer ${userInfo.authToken}",
-      // "timeDifference": "${appConfig.timeZoneOffset}",
       "x-api-version": "1.1"
     };
   }

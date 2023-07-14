@@ -7,11 +7,6 @@ class MessagesController extends GetxController {
   var isLoading = false.obs;
   var messages = GetMessagesEntity().obs;
 
-  @override
-  void onInit() {
-    super.onInit();
-  }
-
   void getMessages() async {
     isLoading.value = true;
     HomeRepository homeRepository = HomeRepositoryImpl();
