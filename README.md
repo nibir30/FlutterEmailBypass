@@ -26,7 +26,7 @@ link: https://drive.google.com/drive/folders/1qbEHT8CwJY9fiqaLTJj4kWcSJ56LWMFw?u
 
 Flutter sdk supported version: From 2.16.2, less than 3.0.0
 
-If any model is modified, run on terminal "flutter packages pub run build_runner build --delete-conflicting-outputs" at directory "uniSearch_Test\unisearch_test"
+If any model is modified, run on terminal "flutter packages pub run build_runner build --delete-conflicting-outputs" at directory "FlutterEmailBypass\test_assignment\"
 
 API Documentation: https://docs.mail.tm/
 
