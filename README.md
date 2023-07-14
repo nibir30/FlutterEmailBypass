@@ -8,12 +8,15 @@ A project containing Login, SignUp, Home screens, Buttons, Textfields and Widget
 - Login using existing accounts
 - View Emails sent to the email account
 - View mail details, such as Sender, Subject, Body, Time
+- Offline caching of auth token
 - Attractive UI
 
 ## Architecture
 
 - Modified Clean Architecture has been followed throughout the project.
 - GetX package has been used for state management
+- BLoC has been used for logging out
+
 ## APK link
 
 link: https://drive.google.com/drive/folders/1qbEHT8CwJY9fiqaLTJj4kWcSJ56LWMFw?usp=sharing
@@ -30,6 +33,7 @@ API Documentation: https://docs.mail.tm/
 Demo API: https://api.mail.tm/
 
 ## Packages and libraries used
+
   get: ^4.6.5
 
   shared_preferences: ^2.0.12
